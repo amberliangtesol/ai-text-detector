@@ -201,7 +201,7 @@ def main():
         col1, col2, col3 = st.columns([3, 2, 3])
         with col2:
             logo = Image.open(logo_path)
-            st.image(logo, use_container_width=True)
+            st.image(logo, width='stretch')
     
     # Subtitle only
     st.markdown('<p class="subtitle">Maintain the authenticity of your writing by identifying AI-generated content</p>', unsafe_allow_html=True)
