@@ -263,47 +263,52 @@ Earth is our only home. Faced with an accelerating warming trend, now is the bes
         )
     
     if analyze_button and text:
-        # 立即添加自動滾動錨點和JavaScript
-        st.markdown('<div id="loading-section"></div>', unsafe_allow_html=True)
-        st.markdown('''
-        <script>
-            // 立即滾動到加載區域
-            setTimeout(function() {
-                var element = document.getElementById("loading-section");
-                if (element) {
-                    element.scrollIntoView({ behavior: "smooth", block: "start" });
-                }
-            }, 100);
-        </script>
-        ''', unsafe_allow_html=True)
-        
-        # 顯示自定義加載動畫
-        loading_placeholder = st.empty()
-        with loading_placeholder.container():
+        try:
+            # 立即添加自動滾動錨點和JavaScript
+            st.markdown('<div id="loading-section"></div>', unsafe_allow_html=True)
             st.markdown('''
-            <div class="loading-container">
-                <div class="loading-wheel"></div>
-                <div class="loading-text">
-                    🤖 Analyzing your text<span class="loading-dots"></span>
-                </div>
-            </div>
+            <script>
+                // 立即滾動到加載區域
+                setTimeout(function() {
+                    var element = document.getElementById("loading-section");
+                    if (element) {
+                        element.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                }, 100);
+            </script>
             ''', unsafe_allow_html=True)
-        
-        # 加入短暫延遲讓動畫效果更明顯
-        time.sleep(0.5)
-        
-        # 執行分析
-        # 整體分析
-        result = clf(text, truncation=True, max_length=512)[0]
-        is_ai = result["label"].endswith("1")
-        overall_score = result["score"] if is_ai else 1 - result["score"]
-        ai_percentage = overall_score * 100
-        
-        # 分段分析
-        segments, segment_scores = analyze_text_segments(text, clf, tokenizer)
-        
-        # 清除加載動畫
-        loading_placeholder.empty()
+            
+            # 顯示自定義加載動畫
+            loading_placeholder = st.empty()
+            with loading_placeholder.container():
+                st.markdown('''
+                <div class="loading-container">
+                    <div class="loading-wheel"></div>
+                    <div class="loading-text">
+                        🤖 Analyzing your text<span class="loading-dots"></span>
+                    </div>
+                </div>
+                ''', unsafe_allow_html=True)
+            
+            # 加入短暫延遲讓動畫效果更明顯
+            time.sleep(0.5)
+            
+            # 執行分析
+            # 整體分析
+            result = clf(text, truncation=True, max_length=512)[0]
+            is_ai = result["label"].endswith("1")
+            overall_score = result["score"] if is_ai else 1 - result["score"]
+            ai_percentage = overall_score * 100
+            
+            # 分段分析
+            segments, segment_scores = analyze_text_segments(text, clf, tokenizer)
+            
+            # 清除加載動畫
+            loading_placeholder.empty()
+        except Exception as e:
+            loading_placeholder.empty()
+            st.error(f"Error during analysis: {str(e)}")
+            st.stop()
         
         # 結果展示 - 添加報告標題 (與 Enter Text to Analyze 相同樣式)
         st.markdown('<div id="results"></div>', unsafe_allow_html=True)
@@ -389,7 +394,7 @@ Earth is our only home. Faced with an accelerating warming trend, now is the bes
             
             with col1:
                 st.markdown('<div class="analysis-header">📊 Text Analysis Breakdown</div>', unsafe_allow_html=True)
-                    
+                
                 if segments and segment_scores:
                     # 統計資料
                     stats = {
