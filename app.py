@@ -345,27 +345,27 @@ Earth is our only home. Faced with an accelerating warming trend, now is the bes
             
             # 使用container來包含所有內容
             with st.container():
-            st.markdown('<div class="result-container">', unsafe_allow_html=True)
-            
-            # 簡化布局 - 只顯示圓環圖和信心分數
-            col1, col2, col3 = st.columns([1, 2, 1])
-            
-            with col1:
-                st.markdown(f'''
-                <div class="metric-container">
-                    <div class="metric-label">Confidence Score</div>
-                    <div class="metric-value">{overall_score:.2%}</div>
-                </div>
-                ''', unsafe_allow_html=True)
-            
-            with col2:
-                # 圓環圖
-                fig = create_donut_chart(ai_percentage)
-                st.plotly_chart(fig, use_container_width=True, key="donut_chart")
-            
-            with col3:
-                # 空白或其他內容
-                st.markdown('<div style="height: 100%;"></div>', unsafe_allow_html=True)
+                st.markdown('<div class="result-container">', unsafe_allow_html=True)
+                
+                # 簡化布局 - 只顯示圓環圖和信心分數
+                col1, col2, col3 = st.columns([1, 2, 1])
+                
+                with col1:
+                    st.markdown(f'''
+                    <div class="metric-container">
+                        <div class="metric-label">Confidence Score</div>
+                        <div class="metric-value">{overall_score:.2%}</div>
+                    </div>
+                    ''', unsafe_allow_html=True)
+                
+                with col2:
+                    # 圓環圖
+                    fig = create_donut_chart(ai_percentage)
+                    st.plotly_chart(fig, use_container_width=True, key="donut_chart")
+                
+                with col3:
+                    # 空白或其他內容
+                    st.markdown('<div style="height: 100%;"></div>', unsafe_allow_html=True)
             
             # 詳細分析區
             st.markdown("---")
