@@ -263,6 +263,7 @@ Earth is our only home. Faced with an accelerating warming trend, now is the bes
         )
     
     if analyze_button and text:
+        loading_placeholder = st.empty()
         try:
             # 立即添加自動滾動錨點和JavaScript
             st.markdown('<div id="loading-section"></div>', unsafe_allow_html=True)
@@ -279,7 +280,6 @@ Earth is our only home. Faced with an accelerating warming trend, now is the bes
             ''', unsafe_allow_html=True)
             
             # 顯示自定義加載動畫
-            loading_placeholder = st.empty()
             with loading_placeholder.container():
                 st.markdown('''
                 <div class="loading-container">
@@ -305,17 +305,13 @@ Earth is our only home. Faced with an accelerating warming trend, now is the bes
             
             # 清除加載動畫
             loading_placeholder.empty()
-        except Exception as e:
-            loading_placeholder.empty()
-            st.error(f"Error during analysis: {str(e)}")
-            st.stop()
-        
-        # 結果展示 - 添加報告標題 (與 Enter Text to Analyze 相同樣式)
-        st.markdown('<div id="results"></div>', unsafe_allow_html=True)
-        st.markdown('<h3 style="text-align: center;">📋 AI Detector Report</h3>', unsafe_allow_html=True)
-        
-        # 自動滾動到結果區域
-        st.markdown('''
+            
+            # 結果展示 - 添加報告標題 (與 Enter Text to Analyze 相同樣式)
+            st.markdown('<div id="results"></div>', unsafe_allow_html=True)
+            st.markdown('<h3 style="text-align: center;">📋 AI Detector Report</h3>', unsafe_allow_html=True)
+            
+            # 自動滾動到結果區域
+            st.markdown('''
         <script>
             // 滾動到結果區域
             setTimeout(function() {
@@ -325,10 +321,10 @@ Earth is our only home. Faced with an accelerating warming trend, now is the bes
                 }
             }, 200);
         </script>
-        ''', unsafe_allow_html=True)
-        
-        # 使用container來包含所有內容
-        with st.container():
+            ''', unsafe_allow_html=True)
+            
+            # 使用container來包含所有內容
+            with st.container():
             st.markdown('<div class="result-container">', unsafe_allow_html=True)
             
             # 簡化布局 - 只顯示圓環圖和信心分數
@@ -558,6 +554,11 @@ Earth is our only home. Faced with an accelerating warming trend, now is the bes
                 st.info("ℹ️ Moderate AI content. Some sections may need revision.")
             else:
                 st.success("✅ Content appears to be primarily human-written.")
+        
+        except Exception as e:
+            loading_placeholder.empty()
+            st.error(f"Error during analysis: {str(e)}")
+            st.stop()
     
     elif analyze_button and not text:
         st.warning("⚠️ Please enter text to analyze!")
