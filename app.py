@@ -196,10 +196,10 @@ def main():
     </div>
     ''', unsafe_allow_html=True)
     
-    # Logo Section - smaller size
+    # Logo Section - larger size
     logo_path = "assets/logo.png"
     if os.path.exists(logo_path):
-        col1, col2, col3 = st.columns([3, 2, 3])
+        col1, col2, col3 = st.columns([2, 3, 2])
         with col2:
             logo = Image.open(logo_path)
             st.image(logo, width='stretch')
@@ -235,8 +235,28 @@ Most importantly, raising climate awareness among the public is crucial. Global 
 
 Earth is our only home. Faced with an accelerating warming trend, now is the best time to act. Even small changes in daily life can help cool our planet and secure a more hopeful future for the next generation."""
         
-        # 載入範例按鈕 with icon and gray style
-        if st.button("📄 Sample Text", use_container_width=True, key="sample_btn"):
+        # 載入範例文字連結樣式
+        st.markdown('''
+        <style>
+        .sample-text-link {
+            color: #fd373b;
+            text-decoration: none;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            transition: opacity 0.2s;
+        }
+        .sample-text-link:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+        </style>
+        ''', unsafe_allow_html=True)
+        
+        if st.button("⬇ Load Sample Text", key="sample_btn", help="Click to load a sample text for testing", type="tertiary"):
             st.session_state.text_area_input = sample_text
             st.rerun()
     

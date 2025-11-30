@@ -136,7 +136,7 @@ header {visibility: hidden;}
 }
 
 .logo-section img {
-    max-height: 150px;
+    max-height: 250px;
     width: auto;
     background: transparent !important;
     box-shadow: none !important;
@@ -233,22 +233,26 @@ header {visibility: hidden;}
     opacity: 0.9;
 }
 
-/* Sample Button Style - Gray Theme */
+/* Sample Button Style - Link Style */
 .st-key-sample_btn button {
-    background: #e8e8e8 !important;
-    border: 2px solid #d0d0d0 !important;
-    color: #555555 !important;
-    padding: 0.6rem 1.2rem !important;
-    font-size: 0.9rem !important;
+    background: transparent !important;
+    border: none !important;
+    color: #fd373b !important;
+    padding: 0.2rem 0 !important;
+    font-size: 0.95rem !important;
+    font-weight: normal !important;
     white-space: nowrap !important;
-    transition: all 0.3s ease !important;
+    transition: all 0.2s ease !important;
+    text-decoration: none !important;
+    box-shadow: none !important;
 }
 
 .st-key-sample_btn button:hover {
-    background: #666666 !important;
-    color: white !important;
-    border-color: #666666 !important;
-    transform: translateY(-2px) !important;
+    background: transparent !important;
+    color: #fd373b !important;
+    text-decoration: underline !important;
+    opacity: 0.8 !important;
+    transform: none !important;
 }
 
 /* DETECT AI Button with Animation */
