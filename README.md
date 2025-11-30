@@ -1,37 +1,89 @@
-# AI Text Detector 🤖
+# AI Text Detector 🔍
 
-使用 Hugging Face 預訓練模型偵測文字是由人類撰寫還是 AI 生成。
+A modern web application that detects AI-generated content using the ModernBERT model from Hugging Face.
 
-## 專案結構
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://ai-text-detector.streamlit.app)
 
-```
-ai-text-detector/
-├── app.py              # 主程式
-├── requirements.txt    # 套件依賴
-├── assets/            # 資源資料夾
-│   └── logo.png       # (請放置你的 logo 圖片)
-├── styles/            # 樣式資料夾
-│   └── custom.css     # 自訂 CSS 樣式
-└── README.md          # 專案說明
-```
+## 🌟 Features
 
-## 安裝
+- **AI Detection**: Uses state-of-the-art ModernBERT model to identify AI-generated text
+- **Visual Analytics**: Interactive donut charts and segment analysis
+- **Content Classification**: Categorizes text into 4 levels (Identical, Minor Changes, Paraphrased, Unique)
+- **Real-time Analysis**: Instant feedback with confidence scores
+- **Modern UI**: Clean, responsive design with animated elements
+- **Sample Text**: Built-in example for quick testing
+
+## 🚀 Live Demo
+
+Visit the live app: [AI Text Detector](https://ai-text-detector.streamlit.app)
+
+## 💻 Local Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/amberliangtesol/ai-text-detector.git
 cd ai-text-detector
+
+# Install dependencies
 pip install -r requirements.txt
-```
 
-## 執行
-
-```bash
+# Run the app
 streamlit run app.py
 ```
 
-## 新增 Logo
+## 📦 Requirements
 
-將你的 logo 圖片放在 `assets/logo.png`，應用程式會自動載入。
+- Python 3.8+
+- streamlit==1.29.0
+- transformers==4.36.0
+- torch==2.1.0
+- plotly==5.18.0
+- numpy==1.24.3
+- Pillow==10.1.0
 
-## 自訂樣式
+## 📁 Project Structure
 
-編輯 `styles/custom.css` 來自訂應用程式的外觀。
+```
+ai-text-detector/
+├── app.py              # Main application
+├── requirements.txt    # Package dependencies
+├── assets/            # Resource folder
+│   ├── logo.png       # Logo image
+│   └── bg.png        # Background image
+├── styles/            # Style folder
+│   └── custom.css     # Custom CSS styles
+├── .streamlit/        # Streamlit configuration
+│   └── config.toml    # Theme and server settings
+└── README.md          # Project documentation
+```
+
+## 🎯 How It Works
+
+1. **Input Text**: Paste or type the text you want to analyze
+2. **Click Detect**: The AI model analyzes your text
+3. **View Results**: 
+   - Overall AI percentage in a donut chart
+   - Segment-by-segment analysis
+   - Content classification breakdown
+   - Detection verdict (AI Generated or Human Written)
+
+## 🛠️ Technology Stack
+
+- **Frontend**: Streamlit
+- **AI Model**: AICodexLab/answerdotai-ModernBERT-base-ai-detector
+- **Visualization**: Plotly
+- **Styling**: Custom CSS with modern design
+
+## 👤 Author
+
+**amberliangtesol**
+
+- GitHub: [@amberliangtesol](https://github.com/amberliangtesol)
+
+## 📄 License
+
+This project is open source and available under the MIT License.
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
