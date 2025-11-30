@@ -6,6 +6,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 import numpy as np
 import re
+import time
 
 # 頁面配置
 st.set_page_config(
@@ -262,56 +263,88 @@ Earth is our only home. Faced with an accelerating warming trend, now is the bes
         )
     
     if analyze_button and text:
-        with st.spinner("🤖 Analyzing text..."):
-            # 整體分析
-            result = clf(text, truncation=True, max_length=512)[0]
-            is_ai = result["label"].endswith("1")
-            overall_score = result["score"] if is_ai else 1 - result["score"]
-            ai_percentage = overall_score * 100
-            
-            # 分段分析
-            segments, segment_scores = analyze_text_segments(text, clf, tokenizer)
-            
-            # 結果展示 - 添加報告標題 (與 Enter Text to Analyze 相同樣式)
-            st.markdown('<div id="results"></div>', unsafe_allow_html=True)
-            st.markdown('<h3 style="text-align: center;">📋 AI Detector Report</h3>', unsafe_allow_html=True)
-            
-            # Add JavaScript to auto-scroll to results with delay
+        # 立即添加自動滾動錨點和JavaScript
+        st.markdown('<div id="loading-section"></div>', unsafe_allow_html=True)
+        st.markdown('''
+        <script>
+            // 立即滾動到加載區域
+            setTimeout(function() {
+                var element = document.getElementById("loading-section");
+                if (element) {
+                    element.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+            }, 100);
+        </script>
+        ''', unsafe_allow_html=True)
+        
+        # 顯示自定義加載動畫
+        loading_placeholder = st.empty()
+        with loading_placeholder.container():
             st.markdown('''
-            <script>
-                // Auto scroll to results section after a short delay
-                setTimeout(function() {
-                    var element = document.getElementById("results");
-                    if (element) {
-                        element.scrollIntoView({ behavior: "smooth", block: "start" });
-                    }
-                }, 500);
-            </script>
+            <div class="loading-container">
+                <div class="loading-wheel"></div>
+                <div class="loading-text">
+                    🤖 Analyzing your text<span class="loading-dots"></span>
+                </div>
+            </div>
             ''', unsafe_allow_html=True)
+        
+        # 加入短暫延遲讓動畫效果更明顯
+        time.sleep(0.5)
+        
+        # 執行分析
+        # 整體分析
+        result = clf(text, truncation=True, max_length=512)[0]
+        is_ai = result["label"].endswith("1")
+        overall_score = result["score"] if is_ai else 1 - result["score"]
+        ai_percentage = overall_score * 100
+        
+        # 分段分析
+        segments, segment_scores = analyze_text_segments(text, clf, tokenizer)
+        
+        # 清除加載動畫
+        loading_placeholder.empty()
+        
+        # 結果展示 - 添加報告標題 (與 Enter Text to Analyze 相同樣式)
+        st.markdown('<div id="results"></div>', unsafe_allow_html=True)
+        st.markdown('<h3 style="text-align: center;">📋 AI Detector Report</h3>', unsafe_allow_html=True)
+        
+        # 自動滾動到結果區域
+        st.markdown('''
+        <script>
+            // 滾動到結果區域
+            setTimeout(function() {
+                var element = document.getElementById("results");
+                if (element) {
+                    element.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+            }, 200);
+        </script>
+        ''', unsafe_allow_html=True)
+        
+        # 使用container來包含所有內容
+        with st.container():
+            st.markdown('<div class="result-container">', unsafe_allow_html=True)
             
-            # 使用container來包含所有內容
-            with st.container():
-                st.markdown('<div class="result-container">', unsafe_allow_html=True)
-                
-                # 簡化布局 - 只顯示圓環圖和信心分數
-                col1, col2, col3 = st.columns([1, 2, 1])
-                
-                with col1:
-                    st.markdown(f'''
-                    <div class="metric-container">
-                        <div class="metric-label">Confidence Score</div>
-                        <div class="metric-value">{overall_score:.2%}</div>
-                    </div>
-                    ''', unsafe_allow_html=True)
-                
-                with col2:
-                    # 圓環圖
-                    fig = create_donut_chart(ai_percentage)
-                    st.plotly_chart(fig, use_container_width=True, key="donut_chart")
-                
-                with col3:
-                    # 空白或其他內容
-                    st.markdown('<div style="height: 100%;"></div>', unsafe_allow_html=True)
+            # 簡化布局 - 只顯示圓環圖和信心分數
+            col1, col2, col3 = st.columns([1, 2, 1])
+            
+            with col1:
+                st.markdown(f'''
+                <div class="metric-container">
+                    <div class="metric-label">Confidence Score</div>
+                    <div class="metric-value">{overall_score:.2%}</div>
+                </div>
+                ''', unsafe_allow_html=True)
+            
+            with col2:
+                # 圓環圖
+                fig = create_donut_chart(ai_percentage)
+                st.plotly_chart(fig, use_container_width=True, key="donut_chart")
+            
+            with col3:
+                # 空白或其他內容
+                st.markdown('<div style="height: 100%;"></div>', unsafe_allow_html=True)
             
             # 詳細分析區
             st.markdown("---")
