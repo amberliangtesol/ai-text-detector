@@ -131,12 +131,12 @@ header {visibility: hidden;}
 /* Logo Section */
 .logo-section {
     text-align: center;
-    padding: 2rem 0;
-    margin-bottom: 1rem;
+    padding: 1rem 0;
+    margin-bottom: 0.5rem;
 }
 
 .logo-section img {
-    max-height: 250px;
+    max-height: 70px;
     width: auto;
     background: transparent !important;
     box-shadow: none !important;
@@ -166,7 +166,7 @@ header {visibility: hidden;}
     text-align: center;
     color: #666;
     font-size: 1.2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 0;
 }
 
 /* Input Area Styling */
@@ -598,7 +598,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Specifically target st-emotion-cache-zy6yx3 */
 .st-emotion-cache-zy6yx3 {
-    padding: 2rem 6rem !important;
+    padding: 1rem 6rem !important;
 }
 
 /* Specifically target the classification donut chart container */
@@ -626,8 +626,8 @@ h1, h2, h3, h4, h5, h6 {
 .stHorizontalBlock.st-emotion-cache-1permvm {
     background: transparent !important;
     border-radius: 15px !important;
-    padding: 1rem !important;
-    margin: 1rem 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
     box-shadow: none !important;
 }
 
